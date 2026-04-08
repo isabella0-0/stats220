@@ -1,0 +1,72 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+body{background-color: #caddfa}
+h2{font-weight: bold}
+```
+
+## **What types of posts are selected to be viewed first on the instagram home feed and how much time is this feed used for?**
+
+```{r}
+library(magick)
+library(tidyverse)
+  logged_data <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTPH4g_P33aHJOhCZNn0EWXXGPRZRYxSWWkXDtRdZZDgM6-7TaVHc3sj5Uq3POvQN9eLdV-1L0WNDPk/pub?output=csv")%>%
+    rename(Date_time = What.date.and.time.did.you.open.your.home.feed.on.instagram.,
+          time_spent = How.long.in.minutes.did.you.spend.scrolling.on.the.instagram.home.feed..This.includes.the..Following..and..Favorites..feeds.in.the.drop.down.of.the.home.feed.,
+          post_follow_status = Were.you.already.following.or.not.following.the.account.of.the.first.post.on.your.instagram.home.feed.,
+          reel_post =  Was.the.first.post.on.your.home.feed.a.singular.video.reel.)
+  
+  paste("The average time all responders spend on the instagram home feed in one session is", mean(logged_data $ time_spent), "minutes.")
+  
+  paste("The most time a responder has spent on the instagram home feed in one session is", max(logged_data $ time_spent), "minutes.")
+
+```
+
+When using the feed, the first post can be from an account the user does not already follow. The graph below compares how many of these first posts from followed or unfollowed accounts are a reel (a post consisting of one video).       
+
+<!--- include dynamic statements that change with your data labs 2, could do a total of __ hours has been spent on the home feed --->
+```{r}
+library(magick)
+library(tidyverse)
+  logged_data <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTPH4g_P33aHJOhCZNn0EWXXGPRZRYxSWWkXDtRdZZDgM6-7TaVHc3sj5Uq3POvQN9eLdV-1L0WNDPk/pub?output=csv")%>%
+    rename(Date_time = What.date.and.time.did.you.open.your.home.feed.on.instagram.,
+          time_spent = How.long.in.minutes.did.you.spend.scrolling.on.the.instagram.home.feed..This.includes.the..Following..and..Favorites..feeds.in.the.drop.down.of.the.home.feed.,
+          post_follow_status = Were.you.already.following.or.not.following.the.account.of.the.first.post.on.your.instagram.home.feed.,
+          reel_post =  Was.the.first.post.on.your.home.feed.a.singular.video.reel.)
+
+    ggplot(data = logged_data) +
+    geom_bar(aes(x = post_follow_status, fill = reel_post)) +
+    labs( title = "Comparing how many reel posts that were the first post on the home feed",
+          subtitle = "came from accounts that were or were not already being followed by the user.",
+          y = "Number of instances",
+          x = "Follow status of the first home feed post")
+```
+
+The below graph represents how long users spend on the home feed and if the first post they saw was a reel. 
+
+```{r}
+library(magick)
+library(tidyverse)
+  logged_data <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTPH4g_P33aHJOhCZNn0EWXXGPRZRYxSWWkXDtRdZZDgM6-7TaVHc3sj5Uq3POvQN9eLdV-1L0WNDPk/pub?output=csv")%>%
+    rename(Date_time = What.date.and.time.did.you.open.your.home.feed.on.instagram.,
+          time_spent = How.long.in.minutes.did.you.spend.scrolling.on.the.instagram.home.feed..This.includes.the..Following..and..Favorites..feeds.in.the.drop.down.of.the.home.feed.,
+          post_follow_status = Were.you.already.following.or.not.following.the.account.of.the.first.post.on.your.instagram.home.feed.,
+          reel_post =  Was.the.first.post.on.your.home.feed.a.singular.video.reel.)
+
+    ggplot(data = logged_data) +
+    geom_bar(aes(x = time_spent, fill = reel_post)) +
+    labs( title = "Comparing how much time was spent on the instagram home feed",
+          subtitle = "and whether or not the first post on the feed was an instagram reel post.",
+          y = "Number of instances",
+          x = "Time spent on home page (minutes)")
+```
+![](https://media1.tenor.com/m/glOpEvcH7oIAAAAC/phone-addictedzz.gif)
+Happy scrolling!
